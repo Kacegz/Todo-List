@@ -69,6 +69,8 @@ html,body,p,h1,h2,h3{
 }
 .customtask{
     padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
     border: 2px solid var(--slate);
     border-radius: 40px;
     display: flex;
@@ -84,12 +86,13 @@ html,body,p,h1,h2,h3{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:5px;
+    gap:10px;
 }
 .taskbutton{
     width: 20px;
     height: 20px;
-    border: 1px solid var(--slate);
+
+    padding: 2px;
     border-radius: 5px;
 }
 dialog{
@@ -115,9 +118,6 @@ dialog{
     align-items: center;
     justify-content: center;
 }
-#modal>form>p{
-    color:black;
-}
 input[type="text"],.modalbutton{
     color:white;
     background-color: var(--header);
@@ -125,4 +125,19 @@ input[type="text"],.modalbutton{
     border-radius: 20px;
     padding: 10px;
     font-size: 1.2rem;
+}
+input[type="checkbox"]{
+    accent-color: #687888;
+}
+.deletebutton{
+    background-image: url(assets/delete.svg);
+    background-size: contain;
+}
+.expandbutton{
+    background-image: url(assets/expand.svg);
+    background-size: contain;
+}
+.editbutton{
+    background-image: url(assets/edit.svg);
+    background-size: contain;
 }
