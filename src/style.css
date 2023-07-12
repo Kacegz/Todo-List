@@ -71,4 +71,44 @@ html,body,p,h1,h2,h3{
     padding: 20px;
     border: 2px solid var(--slate);
     border-radius: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customproject{
+    padding: 10px;
+    border: 2px solid var(--slate);
+    border-radius: 40px;
+}
+.options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
+}
+.taskbutton{
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--slate);
+    border-radius: 5px;
+}
+dialog{
+    background-color: var(--main);
+    border: 2px solid var(--header);
+    border-radius: 20px;
+    width: 40vw;
+    height: 60vh;
+    
+}
+#wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap:30px;
+}
+#modal>form>p{
+    color:black;
 }
