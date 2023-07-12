@@ -46,7 +46,7 @@ html,body,p,h1,h2,h3{
     border-radius: 50px;
     padding: 10px;
 }
-#projects{
+#projectsnav{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,9 +75,8 @@ html,body,p,h1,h2,h3{
     justify-content: space-between;
     align-items: center;
 }
-
 .customproject{
-    padding: 10px;
+    padding: 15px;
     border: 2px solid var(--slate);
     border-radius: 40px;
 }
@@ -97,9 +96,9 @@ dialog{
     background-color: var(--main);
     border: 2px solid var(--header);
     border-radius: 20px;
-    width: 40vw;
-    height: 60vh;
-    
+    width: 20vw;
+    padding: 60px;
+    font-size: 1.5rem;
 }
 #wrapper{
     display: flex;
@@ -109,6 +108,21 @@ dialog{
     height: 100%;
     gap:30px;
 }
+#inputfield{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
 #modal>form>p{
     color:black;
+}
+input[type="text"],.modalbutton{
+    color:white;
+    background-color: var(--header);
+    border:none;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 1.2rem;
 }
