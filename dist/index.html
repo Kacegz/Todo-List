@@ -14,7 +14,9 @@
         </div>
         <div id="content">
             <div id="projects">
-                <h1>All projects</h1>
+                <div class="customproject">
+                    <h1 id="allprojects">All projects</h1>
+                </div>
                 <div id="customprojects">
                     
                 </div>
@@ -32,18 +34,17 @@
                     <h3>Add new task</h3>
                 </div>
             </div>
-            <dialog id="favDialog">
-                <form>
-                  <p>
-                    <label>
-                      Name for your new project:
-                        <input type="text" name="name" id="projectname">
-                    </label>
-                  </p>
-                  <div>
-                    <button value="cancel" formmethod="dialog">Cancel</button>
-                    <button id="confirmBtn" value="">Confirm</button>
-                  </div>
+            <dialog id="modal">
+                <form method="dialog">
+                    <div id="wrapper">
+                        <div id="inputfield">
+                            
+                        </div>
+                        <div>
+                            <button id="confirm">Confirm</button>
+                            <button value="cancel">Cancel</button>
+                        </div>
+                    </div>
                 </form>
             </dialog>
         </div>
