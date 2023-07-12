@@ -5,13 +5,12 @@ import {updateScreen} from './dom';
 
 const exampleProject1 = new project('firstproject');
 const exampleProject2 = new project('secondproject');
-const exampleTask1= new todo("First","","","","","");
-const exampleTask2= new todo("Second","","","","","");
+const exampleTask1= new todo("First","Description","12.12.2023","High","notes","Not finished");
+const exampleTask2= new todo("Second","","","","","True");
 
-exampleTask1.assignProject=exampleProject1;
+exampleProject1.assignTask(exampleTask1);
 displayAllTasks();
 displayAllProjects()
-updateScreen();
 updateScreen();
 exampleTask1.displayCurrent();
 
