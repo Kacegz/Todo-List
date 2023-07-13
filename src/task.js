@@ -1,3 +1,4 @@
+import { projectList } from "./project";
 let tasklist=[];
 let id=0;
 class todo{
@@ -15,7 +16,18 @@ class todo{
         console.log(this.title+" "+this.desc)
     }
     delete(){
+        //tasklist[this.id]=undefined
         delete tasklist[this.id];
+        //some weird spaghetti below
+        projectList.forEach(e => {
+            //loop for each project
+            e.assignedTasks.forEach((element,index) => {
+                //for each task in project search for this one and set to undefined
+                if(element==this){
+                    e.assignedTasks[index]=undefined;
+                }
+            });
+        });
     }
 }
 function displayAllTasks(){
@@ -23,9 +35,9 @@ function displayAllTasks(){
         console.log(element)
     });
 }
-function createTask(title,desc,dueDate,priority,notes,checklist){
-    if(title!=null){
-        new todo(title,desc,dueDate,priority,notes,checklist)
+function createTask(title,desc,dueDate,priority,notes,checklist,){
+    if(title!="" && desc!="" && dueDate!="" && priority!=""){
+        return new todo(title,desc,dueDate,priority,notes,checklist)
     }
 }
 export {todo,displayAllTasks,createTask,tasklist};
