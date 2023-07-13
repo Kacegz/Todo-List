@@ -19,4 +19,9 @@ function displayAllProjects(){
         return console.log({...element})
     });
 }
-export {project,displayAllProjects,projectList}
+function addProject(name){
+    if(name!==""){
+        new project(name);
+    }
+}
+export {project,displayAllProjects,projectList,addProject}
