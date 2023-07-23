@@ -1,6 +1,5 @@
 import {todo,createTask,tasklist} from './task.js';
 import {project,addProject,projectList} from './project.js';
-
 let activeProject
 
 function displayProjects(){
@@ -98,11 +97,10 @@ function displayTasks(array){
                     customTask.setAttribute('style','border-color:green;')
                     break;
             }
-
             const customTaskEdit=document.createElement('div');
             customTaskEdit.classList.add('taskbutton');
             customTaskEdit.classList.add('editbutton');
-
+            customTaskEdit.addEventListener('click',()=>{editTask(task)});
             const customTaskDelete=document.createElement('div');
             customTaskDelete.classList.add('taskbutton');
             customTaskDelete.classList.add('deletebutton');
@@ -142,17 +140,7 @@ function showTaskDetails(expandable){
         expandable.hidden=true;
     }
 }
-/*
-    const buttons=document.querySelector('.modalbuttons');
-    const confirmButton=document.createElement('div').classList.add('modalbutton');
-    confirmButton.id="taskconfirm";
-    confirmButton.textContent="Confirm";
-    const cancelButton=document.createElement('div').classList.add('modalbutton');
-    cancelButton.setAttribute('value','cancel')
-    cancelButton.textContent="Cancel";
-    buttons.appendChild(confirmButton);
-    buttons.appendChild(cancelButton);
-*/
+
 function projectClickHandler(){
     //Add event listener to display all projects
     const allProjects=document.querySelector('#allprojectbutton');
@@ -168,36 +156,42 @@ function projectClickHandler(){
         })
     });
 }
-/*function deleteButton(id){
-    const allDeleteButtons=document.querySelectorAll('.deletebutton');
-    allDeleteButtons.forEach(button => {
-        button.addEventListener('click',()=>{
-            tasklist[id].delete();
-            refresh();
-        })
-    });
-}*/
 
 function projectModal(){
     //Show modal for new project
-    const newProjectButton=document.querySelector('#newproject')
-    const modal=document.querySelector("#modal");
-    newProjectButton.addEventListener('click',()=>{modal.showModal()})
-    const inputfield=document.querySelector("#inputfield");
+    const wrapper=document.querySelector("#wrapper");
+    wrapper.textContent="";
     const label=document.createElement('label');
     label.setAttribute('for','name');
-    const text=document.createElement('p');
-    text.classList.add("projectmodalmessage");
-    text.textContent="Name for your new project:";
-    label.appendChild(text);
+    label.id="name"
+    label.textContent="Name for your new project:";
     const name=document.createElement('input');
     name.setAttribute('name','name');
     name.setAttribute('type','text');
     name.id="projectname";
-    inputfield.appendChild(label);
-    inputfield.appendChild(name);
-    const confirmButton=document.querySelector('#projectconfirm');
-    
+    wrapper.appendChild(label);
+    wrapper.appendChild(name);
+
+    const buttons=document.createElement('div');
+    buttons.classList.add('modalbuttons');
+    const confirmButton=document.createElement('button');
+    confirmButton.classList.add('modalbutton');
+    confirmButton.id="projectconfirm";
+    confirmButton.textContent="Confirm";
+    const cancelButton=document.createElement('button');
+    cancelButton.classList.add('modalbutton');
+    cancelButton.value = "cancel";
+    cancelButton.textContent="Cancel";
+    buttons.appendChild(confirmButton);
+    buttons.appendChild(cancelButton);
+    wrapper.appendChild(buttons)
+    modal.close();
+    modal.showModal();
+}
+function projectModalHandler(){
+    projectModal();
+    const name=document.querySelector('#projectname')
+    const confirmButton=document.querySelector('#projectconfirm')
     confirmButton.addEventListener('click',(e)=>{
         addProject(name.value);
         refresh();
@@ -205,38 +199,168 @@ function projectModal(){
     })
 }
 function editProject(project){
-    const modal=document.querySelector("#modal");
-    const message=document.querySelector('.projectmodalmessage');
-    message.textContent="Set a new name:";
+    projectModal();
     const input=document.querySelector('#projectname')
-    modal.showModal()
-
-    /*confirmButton.addEventListener('click',(e)=>{
+    const name=document.querySelector('#name');
+    name.textContent="Set a new name:";
+    const confirmButton=document.querySelector('#projectconfirm')
+    confirmButton.addEventListener('click',(e)=>{
         if(input.value!=""){
             project.name=input.value;
+            refresh();
         }
-    })*/
+    })
 }
 function taskModal(){
     //show modal for new task 
-    const newTaskButton=document.querySelector('#newtask')
-    const modal=document.querySelector("#taskmodal");
-    newTaskButton.addEventListener('click',()=>{
-        modal.showModal();
-        projectSelectModal();//refresh with every click
-    })
-    const inputfield=document.querySelector('#inputfield');
+    const wrapper=document.querySelector("#wrapper");
+    wrapper.textContent="";
+    const inputField=document.createElement('div');
+    inputField.id="inputfield";
+    const titleLabel=document.createElement('label');
+    titleLabel.setAttribute('for','title');
+    titleLabel.textContent="Title:";
+    const title=document.createElement('input');
+    title.setAttribute('name','title');
+    title.setAttribute('type','text');
+    title.id="title";
+    const descLabel=document.createElement('label');
+    descLabel.setAttribute('for','desc');
+    descLabel.textContent="Description:";
+    const desc=document.createElement('input');
+    desc.setAttribute('name','desc');
+    desc.setAttribute('type','text');
+    desc.id="desc";
+    const dateLabel=document.createElement('label');
+    dateLabel.setAttribute('for','date');
+    dateLabel.textContent="Due date:";
+    const dateInput=document.createElement('input');
+    dateInput.setAttribute('name','date');
+    dateInput.setAttribute('type','date');
+    dateInput.id="date";
+    const priorityLabel=document.createElement('label');
+    priorityLabel.setAttribute('for','priority');
+    priorityLabel.textContent="Priority:";
+    const priority=document.createElement('select');
+    priority.setAttribute('name','priority');
+    priority.id="priority";
+    const firstOption=document.createElement('option');
+    firstOption.value="High";
+    firstOption.textContent="High";
+    const secondOption=document.createElement('option');
+    secondOption.value="Normal";
+    secondOption.textContent="Normal";
+    const thirdOption=document.createElement('option');
+    thirdOption.value="Low";
+    thirdOption.textContent="Low";
+    priority.appendChild(firstOption);
+    priority.appendChild(secondOption);
+    priority.appendChild(thirdOption);
+    const notesLabel=document.createElement('label');
+    notesLabel.setAttribute('for','notes');
+    notesLabel.textContent="Notes:";
+    const notes=document.createElement('textarea');
+    notes.setAttribute('name','notes');
+    notes.setAttribute('cols','30');
+    notes.setAttribute('rows','10');
+    notes.id="notes";
+    const projectLabel=document.createElement('label');
+    projectLabel.setAttribute('for','project');
+    projectLabel.textContent="Assign to project:";
+    const assignProject=document.createElement('select');
+    assignProject.setAttribute('name','project');
+    assignProject.id="project";
+    const checkLabel=document.createElement('label');
+    checkLabel.setAttribute('for','check');
+    checkLabel.textContent="Finished?:";
+    const check=document.createElement('input');
+    check.setAttribute('name','check');
+    check.setAttribute('type','checkbox');
+    check.id="checklist";
+
+    inputField.appendChild(titleLabel);
+    inputField.appendChild(title);
+    inputField.appendChild(descLabel);
+    inputField.appendChild(desc);
+    inputField.appendChild(dateLabel);
+    inputField.appendChild(dateInput);
+    inputField.appendChild(priorityLabel);
+    inputField.appendChild(priority);
+    inputField.appendChild(notesLabel);
+    inputField.appendChild(notes);
+    inputField.appendChild(projectLabel);
+    inputField.appendChild(assignProject);
+    inputField.appendChild(checkLabel);
+    inputField.appendChild(check);
+
+    wrapper.appendChild(inputField);
+
+    const buttons=document.createElement('div');
+    buttons.classList.add('modalbuttons');
+    const confirmButton=document.createElement('button');
+    confirmButton.classList.add('modalbutton');
+    confirmButton.id="taskconfirm";
+    confirmButton.textContent="Confirm";
+    const cancelButton=document.createElement('button');
+    cancelButton.classList.add('modalbutton');
+    cancelButton.value = "cancel";
+    cancelButton.textContent="Cancel";
+    buttons.appendChild(confirmButton);
+    buttons.appendChild(cancelButton);
+    wrapper.appendChild(buttons)
+    modal.close()
+    modal.showModal();
+}
+function taskModalHandler(){
+    taskModal();
+    const confirmButton=document.querySelector('#taskconfirm');
     const title=document.querySelector('#title');
     const desc=document.querySelector('#desc');
     const date=document.querySelector('#date');
     const priority=document.querySelector('#priority');
     const notes=document.querySelector('#notes');
-    const checklist=document.querySelector('#checklist');
     const assignProject=document.querySelector('#project');
-    const confirmButton=document.querySelector('#taskconfirm');
+    const checklist=document.querySelector('#checklist');
+
     confirmButton.addEventListener('click',()=>{
         let createdTask=createTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked);
         projectList[assignProject.value].assignTask(createdTask)
+        refresh();
+    })
+}
+function editTask(task){
+    taskModal();
+    //
+    const confirmButton=document.querySelector('#taskconfirm');
+    const title=document.querySelector('#title');
+    const desc=document.querySelector('#desc');
+    const date=document.querySelector('#date');
+    const priority=document.querySelector('#priority');
+    const notes=document.querySelector('#notes');
+    const assignProject=document.querySelector('#project');
+    const checklist=document.querySelector('#checklist');
+    checklist.parentNode.removeChild(checklist);//checklist not needed here
+    const checkLabel=document.querySelector('[for="check"]');
+    checkLabel.parentNode.removeChild(checkLabel)
+    projectSelectModal();
+    confirmButton.addEventListener('click',()=>{
+        if(title.value!=""){
+            task.title=title.value;
+        }
+        if(desc.value!=""){
+            task.desc=desc.value;
+        }
+        if(date.value!=""){
+            task.dueDate=date.value;
+        }
+        if(priority.value!=""){
+            task.priority=priority.value;
+        }
+        if(notes.value!=""){
+            task.notes=notes.value;
+        }
+        console.log(task.getAssignedProjects())
+
         refresh();
     })
 }
@@ -251,6 +375,18 @@ function projectSelectModal(){//without this you wont be able to pick a new proj
         assignProject.appendChild(availableProjects)
     });
 }
+function modalClickHandler(){
+    const newProjectButton=document.querySelector('#newproject');
+    newProjectButton.addEventListener('click',()=>{
+        projectModalHandler();
+    })
+    const newTaskButton=document.querySelector('#newtask')
+    newTaskButton.addEventListener('click',()=>{
+        taskModalHandler();
+        projectSelectModal();//refresh with every click
+    })
+}
+
 /*function highlightActive(){
     //first time assigned class variable to dom element...
     activeProject.domElement.style.borderColor="red";
@@ -260,14 +396,12 @@ function refresh(){//refresh tasks and projects
     displayTasks(tasklist);
     displayProjects();
     projectClickHandler();
-
 }
 
 function updateScreen(){//add everything with event listeners for modals
     displayTasks(tasklist);
     displayProjects();
     projectClickHandler();
-    projectModal();
-    taskModal();
+    modalClickHandler();
 }
 export {updateScreen}
