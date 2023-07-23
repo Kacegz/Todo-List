@@ -76,11 +76,17 @@ html,body,p,h1,h2,h3{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    font-size: 1.4rem;
 }
-.customproject{
+.customproject,#allprojectbutton{
     padding: 15px;
     border: 2px solid var(--slate);
     border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
 }
 .options{
     display: flex;
@@ -88,10 +94,9 @@ html,body,p,h1,h2,h3{
     align-items: center;
     gap:10px;
 }
-.taskbutton{
+.taskbutton,.projectbutton{
     width: 20px;
     height: 20px;
-
     padding: 2px;
     border-radius: 5px;
 }
@@ -101,7 +106,10 @@ dialog{
     border-radius: 20px;
     width: 20vw;
     padding: 60px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     font-size: 1.5rem;
+    color: white;
 }
 #wrapper{
     display: flex;
@@ -109,12 +117,17 @@ dialog{
     justify-content: center;
     align-items: center;
     height: 100%;
-    gap:30px;
+    gap:10px;
+}
+.modalbuttons{
+    padding-top: 10px;
+    display: flex;
+    gap:10px;
 }
 #inputfield{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
 }
@@ -140,4 +153,51 @@ input[type="checkbox"]{
 .editbutton{
     background-image: url(assets/edit.svg);
     background-size: contain;
+}
+.projectedit{
+    background-image: url(assets/edit.svg);
+    background-size: contain;
+}
+.projectdelete{
+    background-image: url(assets/delete.svg);
+    background-size: contain;
+}
+.expandable{
+    width: 100%;
+    height: 10vh;
+    padding: 10px;
+}
+.details{
+    display: flex;
+    font-size: 1.2rem;
+    justify-content: space-around;
+    text-align: center;
+    text-overflow: clip;
+}
+.details>div{
+    width: 30vw;
+    overflow-wrap: break-word;
+}
+textarea{
+    resize: none;
+    background-color: var(--header);
+    border: 1px solid var(--header);
+    border-radius: 20px;
+}
+select{
+    background-color: var(--header);
+    border: 0px;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+}
+input[type="date"]{
+    background: var(--header);
+    padding: 5px;
+    border-radius: 20px;
+    border:none;
+    color: white;
+}
+.finished{
+    filter:contrast(10%);
 }
