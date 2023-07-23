@@ -7,9 +7,14 @@ class project{
         projectList.push(this)
     }
     delete(){
+        this.assignedTasks.forEach(task => {
+            task.delete();
+        });
+        this.assignedTasks="";
         delete projectList[this.id];
     }
     assignedTasks=[];
+    domElement="";
     assignTask(task){
         this.assignedTasks.push(task);
     }
