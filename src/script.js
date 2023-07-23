@@ -5,7 +5,7 @@ import {updateScreen} from './dom';
 
 const exampleProject1 = new project('firstproject');
 const exampleProject2 = new project('secondproject');
-const exampleTask1= new todo("First","Description","12.12.2023","High","notes",false);
+const exampleTask1= new todo("First","Description","12.12.2023","High","fgssfdafsdafdsafsdaasdffdasasdfsdfafsdasdfasdafafsd",false);
 const exampleTask2= new todo("Second","","","","",true);
 
 exampleProject1.assignTask(exampleTask1);
