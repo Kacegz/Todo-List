@@ -15,10 +15,9 @@ class todo{
     displayCurrent(){
         console.log(this.title+" "+this.desc)
     }
+    assignedTo="";
     delete(){
-        //tasklist[this.id]=undefined
         delete tasklist[this.id];
-        //some weird spaghetti below
         projectList.forEach(e => {
             //loop for each project
             e.assignedTasks.forEach((element,index) => {
@@ -35,7 +34,7 @@ function displayAllTasks(){
         console.log(element)
     });
 }
-function createTask(title,desc,dueDate,priority,notes,checklist,){
+function createTask(title,desc,dueDate,priority,notes,checklist){
     if(title!="" && desc!="" && dueDate!="" && priority!=""){
         return new todo(title,desc,dueDate,priority,notes,checklist)
     }

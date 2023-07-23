@@ -149,10 +149,23 @@ function projectClickHandler(){
     const projects=document.querySelectorAll('.customproject');
     projects.forEach(project => {
         project.addEventListener('click',()=>{
-            if(projectList[project.id]!==undefined){//prevent from adding into non-existent and causing error
-                displayTasks(projectList[project.id].assignedTasks)
+            //reworked connection task-> project
+            activeProject=projectList[project.id];
+            console.log(projectList[project.id])
+            let tasksInProject=[]
+            tasklist.forEach(task => {
+                if(task.assignedTo===projectList[project.id]){
+                    tasksInProject.push(task)
+                }
+            });
+            displayTasks(tasksInProject)
+            //old connection project->list of tasks
+
+            /*if(projectList[project.id]!==undefined){//prevent from adding into non-existent and causing error
+                /*displayTasks(projectList[project.id].assignedTasks)
                 activeProject=projectList[project.id];
-            }
+            }*/
+            
         })
     });
 }
@@ -272,7 +285,7 @@ function taskModal(){
     assignProject.id="project";
     const checkLabel=document.createElement('label');
     checkLabel.setAttribute('for','check');
-    checkLabel.textContent="Finished?:";
+    checkLabel.textContent="Finished?";
     const check=document.createElement('input');
     check.setAttribute('name','check');
     check.setAttribute('type','checkbox');
@@ -359,8 +372,10 @@ function editTask(task){
         if(notes.value!=""){
             task.notes=notes.value;
         }
-        console.log(task.getAssignedProjects())
-
+        if(assignProject.value!=""){
+            console.log(assignProject.value)
+            task.assignedTo=projectList[assignProject.value];
+        }
         refresh();
     })
 }

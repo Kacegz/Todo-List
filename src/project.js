@@ -13,10 +13,8 @@ class project{
         this.assignedTasks="";
         delete projectList[this.id];
     }
-    assignedTasks=[];
-    domElement="";
     assignTask(task){
-        this.assignedTasks.push(task);
+        task.assignedTo=this;
     }
 }
 function displayAllProjects(){
