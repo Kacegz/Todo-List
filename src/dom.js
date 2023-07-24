@@ -1,5 +1,5 @@
-import {todo,createTask,tasklist} from './task.js';
-import {project,addProject,projectList} from './project.js';
+import {todo,createTask,tasklist,addTaskToStorage,deleteTask} from './task.js';
+import {project,addProject,projectList,addProjectToStorage} from './project.js';
 let activeProject
 
 function displayProjects(){
@@ -104,7 +104,7 @@ function displayTasks(array){
             const customTaskDelete=document.createElement('div');
             customTaskDelete.classList.add('taskbutton');
             customTaskDelete.classList.add('deletebutton');
-            customTaskDelete.addEventListener('click',()=>{deleteTask(task.id)})
+            customTaskDelete.addEventListener('click',()=>{deleteTaskDom(task.id)})
             customTaskOptions.appendChild(customTaskDue);
             customTaskOptions.appendChild(customTaskExpand);
             customTaskOptions.appendChild(customTaskCheck);
@@ -120,8 +120,8 @@ function displayTasks(array){
         }
     });
 }
-function deleteTask(id){
-    tasklist[id].delete()
+function deleteTaskDom(id){
+    deleteTask(tasklist[id])
     refresh();
 }
 function changeCheckList(task){
@@ -141,24 +141,28 @@ function showTaskDetails(expandable){
     }
 }
 
-function projectClickHandler(){
+function clickHandler(){
     //Add event listener to display all projects
     const allProjects=document.querySelector('#allprojectbutton');
-    allProjects.addEventListener('click',()=>{displayTasks(tasklist);})
+    allProjects.addEventListener('click',()=>{
+        displayTasks(tasklist);
+        removeActiveClass();
+        allProjects.classList.add('active');
+    })
     //Add event listener for each project
     const projects=document.querySelectorAll('.customproject');
     projects.forEach(project => {
         project.addEventListener('click',()=>{
             //reworked connection task-> project
             activeProject=projectList[project.id];
-            console.log(projectList[project.id])
             let tasksInProject=[]
             tasklist.forEach(task => {
-                if(task.assignedTo===projectList[project.id]){
+                if(task!=null && task.assignedTo===projectList[project.id]){
                     tasksInProject.push(task)
                 }
             });
             displayTasks(tasksInProject)
+            highlightActive()
             //old connection project->list of tasks
 
             /*if(projectList[project.id]!==undefined){//prevent from adding into non-existent and causing error
@@ -169,7 +173,19 @@ function projectClickHandler(){
         })
     });
 }
-
+function highlightActive(){
+    removeActiveClass()
+    const domActiveProject=document.querySelector('#'+CSS.escape(activeProject.id))
+    domActiveProject.classList.add('active');
+}
+function removeActiveClass(){
+    const allProjects=document.querySelector('#allprojectbutton');
+    allProjects.classList.remove('active');
+    const allDomProjects=document.querySelectorAll('.customproject');
+    allDomProjects.forEach(project=>{
+        project.classList.remove('active');
+    });
+}
 function projectModal(){
     //Show modal for new project
     const wrapper=document.querySelector("#wrapper");
@@ -206,7 +222,11 @@ function projectModalHandler(){
     const name=document.querySelector('#projectname')
     const confirmButton=document.querySelector('#projectconfirm')
     confirmButton.addEventListener('click',(e)=>{
-        addProject(name.value);
+        if(name.value!==""){
+            addProject(name.value);
+        }else{
+            wrongDataAlert();
+        }
         refresh();
         name.value="";
     })
@@ -251,6 +271,7 @@ function taskModal(){
     dateInput.setAttribute('name','date');
     dateInput.setAttribute('type','date');
     dateInput.id="date";
+    dateInput.valueAsDate=new Date()
     const priorityLabel=document.createElement('label');
     priorityLabel.setAttribute('for','priority');
     priorityLabel.textContent="Priority:";
@@ -336,14 +357,18 @@ function taskModalHandler(){
     const checklist=document.querySelector('#checklist');
 
     confirmButton.addEventListener('click',()=>{
-        let createdTask=createTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked);
-        projectList[assignProject.value].assignTask(createdTask)
-        refresh();
+        if(title.value!="" && desc.value!="" && date.value!="" && priority.value!="" && assignProject.value!=""){
+            let createdTask=createTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked);
+            createdTask.assignedTo=projectList[assignProject.value]
+            //projectList[assignProject.value].assignTask(createdTask);
+            refresh();
+        }else{
+            wrongDataAlert();
+        }
     })
 }
 function editTask(task){
     taskModal();
-    //
     const confirmButton=document.querySelector('#taskconfirm');
     const title=document.querySelector('#title');
     const desc=document.querySelector('#desc');
@@ -379,7 +404,7 @@ function editTask(task){
         refresh();
     })
 }
-function projectSelectModal(){//without this you wont be able to pick a new project in modal (refreshes it)
+function projectSelectModal(){//refreshes projects in task modal
     const assignProject=document.querySelector('#project');
     assignProject.textContent="";
     projectList.forEach(project => {
@@ -398,25 +423,33 @@ function modalClickHandler(){
     const newTaskButton=document.querySelector('#newtask')
     newTaskButton.addEventListener('click',()=>{
         taskModalHandler();
-        projectSelectModal();//refresh with every click
+        projectSelectModal();
     })
 }
-
-/*function highlightActive(){
-    //first time assigned class variable to dom element...
-    activeProject.domElement.style.borderColor="red";
-    console.log(activeProject)
-}*/
+function wrongDataAlert(){
+    const wrapper=document.querySelector("#wrapper");
+    wrapper.textContent="Enter valid data";
+    const cancelButton=document.createElement('button');
+    cancelButton.classList.add('modalbutton');
+    cancelButton.value = "Close";
+    cancelButton.textContent="Close";
+    wrapper.appendChild(cancelButton)
+    modal.close()
+    modal.showModal();
+}
 function refresh(){//refresh tasks and projects
+    addTaskToStorage();
+    //addProjectToStorage();
+    document.querySelector('#allprojectbutton').classList.add('active');
     displayTasks(tasklist);
     displayProjects();
-    projectClickHandler();
+    clickHandler();
 }
 
-function updateScreen(){//add everything with event listeners for modals
+function loadPage(){//add everything with event listeners for modals
     displayTasks(tasklist);
     displayProjects();
-    projectClickHandler();
+    clickHandler();
     modalClickHandler();
 }
-export {updateScreen}
+export default loadPage
