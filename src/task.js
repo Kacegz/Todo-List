@@ -1,6 +1,11 @@
-import { projectList } from "./project";
+import { format } from "date-fns";
 let tasklist=[];
-let id=0;
+let id
+if(localStorage.getItem("taskId")){
+    id=localStorage.getItem("taskId")
+}else{
+    id=0;
+}
 class todo{
     constructor(title,desc,dueDate,priority,notes,checklist){
         this.title=title;
@@ -12,31 +17,28 @@ class todo{
         this.id=id++;
         tasklist.push(this)
     }
+    assignedTo="";
     displayCurrent(){
         console.log(this.title+" "+this.desc)
     }
-    assignedTo="";
-    delete(){
-        delete tasklist[this.id];
-        projectList.forEach(e => {
-            //loop for each project
-            e.assignedTasks.forEach((element,index) => {
-                //for each task in project search for this one and set to undefined
-                if(element==this){
-                    e.assignedTasks[index]=undefined;
-                }
-            });
-        });
-    }
+}
+function deleteTask(task){
+    console.log(tasklist)
+    delete tasklist[task.id];
 }
 function displayAllTasks(){
     tasklist.forEach(element => {
         console.log(element)
     });
 }
+function addTaskToStorage(){
+    localStorage.setItem("tasklist",JSON.stringify(tasklist));
+    localStorage.setItem("taskId",JSON.stringify(id));
+}
 function createTask(title,desc,dueDate,priority,notes,checklist){
     if(title!="" && desc!="" && dueDate!="" && priority!=""){
-        return new todo(title,desc,dueDate,priority,notes,checklist)
+        let formattedDate=format(new Date(dueDate),'dd-MM-yyyy');
+        return new todo(title,desc,formattedDate,priority,notes,checklist);
     }
 }
-export {todo,displayAllTasks,createTask,tasklist};
+export {todo,displayAllTasks,createTask,tasklist,addTaskToStorage,deleteTask};
