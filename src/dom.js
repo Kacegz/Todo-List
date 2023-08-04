@@ -1,4 +1,4 @@
-import {createTask,taskList,addTaskToStorage,deleteTask} from './task.js';
+import {createTask,taskList,addTaskToStorage,deleteTask,changeCheckList} from './task.js';
 import {addProject,projectList,addProjectToStorage,deleteProject} from './project.js';
 import { format } from "date-fns";
 let activeProject
@@ -20,7 +20,6 @@ function displayProjects(){
             const customProjectDelete=document.createElement('div');
             customProjectDelete.classList.add('projectbutton');
             customProjectDelete.classList.add("projectdelete");
-    
             customProjectDelete.addEventListener('click',()=>{
                 deleteProject(project);
                 refresh();
@@ -28,7 +27,6 @@ function displayProjects(){
             customProjectEdit.addEventListener('click',()=>{
                 editProject(project)
             })
-    
             customProject.appendChild(customProjectName);
             customProject.appendChild(customProjectEdit);
             customProject.appendChild(customProjectDelete);
@@ -91,7 +89,10 @@ function displayTasks(array){
                 customTaskCheck.checked=false;
                 customTask.classList.remove('finished');
             }
-            customTaskCheck.addEventListener('click',()=>{changeCheckList(task)})
+            customTaskCheck.addEventListener('click',()=>{
+                changeCheckList(task);
+                refresh();
+            })
             customTaskCheck.classList.add('taskbutton');
             customTaskCheck.classList.add('checklist');
             switch(task.priority){
@@ -132,15 +133,6 @@ function deleteTaskDom(id){
     deleteTask(taskList[id])
     refresh();
 }
-function changeCheckList(task){
-        if(task.checklist===true){
-            task.checklist=false;
-            refresh()
-        }else{
-            task.checklist=true;
-            refresh()
-        }
-}
 function showTaskDetails(expandable){
     if(expandable.hidden!==false){
         expandable.hidden=false;
@@ -164,7 +156,6 @@ function clickHandler(){
             activeProject=projectList[project.id];
             let tasksInProject=[]
             taskList.forEach(task => {
-                console.log(projectList)
                 if(task!=null && projectList[project.id]!=undefined && task.assignedTo.id==projectList[project.id].id){
                     tasksInProject.push(task)
                 }

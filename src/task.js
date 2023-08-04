@@ -36,4 +36,11 @@ function createTask(title,desc,dueDate,priority,notes,checklist){
         return new todo(title,desc,formattedDate,priority,notes,checklist);
     }
 }
-export {todo,createTask,taskList,addTaskToStorage,deleteTask};
+function changeCheckList(task){
+    if(task.checklist===true){
+        task.checklist=false;
+    }else{
+        task.checklist=true;
+    }
+}
+export {todo,createTask,taskList,addTaskToStorage,deleteTask,changeCheckList};
