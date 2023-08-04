@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-let tasklist=[];
+let taskList=[];
 let id
 if(localStorage.getItem("taskId")){
     id=localStorage.getItem("taskId")
@@ -15,7 +15,7 @@ class todo{
         this.notes=notes;
         this.checklist=checklist;
         this.id=id++;
-        tasklist.push(this)
+        taskList.push(this)
     }
     assignedTo="";
     displayCurrent(){
@@ -23,16 +23,16 @@ class todo{
     }
 }
 function deleteTask(task){
-    console.log(tasklist)
-    delete tasklist[task.id];
+    console.log(taskList)
+    delete taskList[task.id];
 }
 function displayAllTasks(){
-    tasklist.forEach(element => {
+    taskList.forEach(element => {
         console.log(element)
     });
 }
 function addTaskToStorage(){
-    localStorage.setItem("tasklist",JSON.stringify(tasklist));
+    localStorage.setItem("tasklist",JSON.stringify(taskList));
     localStorage.setItem("taskId",JSON.stringify(id));
 }
 function createTask(title,desc,dueDate,priority,notes,checklist){
@@ -41,4 +41,4 @@ function createTask(title,desc,dueDate,priority,notes,checklist){
         return new todo(title,desc,formattedDate,priority,notes,checklist);
     }
 }
-export {todo,displayAllTasks,createTask,tasklist,addTaskToStorage,deleteTask};
+export {todo,displayAllTasks,createTask,taskList,addTaskToStorage,deleteTask};

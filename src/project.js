@@ -1,5 +1,11 @@
+import { tasklist } from "./task";
 let projectList=[];
-let id=0;
+let id
+if(localStorage.getItem("projectId")){
+    id=localStorage.getItem("taskId")
+}else{
+    id=0;
+}
 class project{
     constructor(name){
         this.name=name;
@@ -7,15 +13,18 @@ class project{
         projectList.push(this)
     }
     delete(){
-        this.assignedTasks.forEach(task => {
-            task.delete();
+        tasklist.forEach(task => {
+            if(task.assignedTo===this){
+                task.delete();
+            }
         });
-        this.assignedTasks="";
         delete projectList[this.id];
     }
-    assignTask(task){
-        task.assignedTo=this;
-    }
+}
+
+function addProjectToStorage(){
+    localStorage.setItem("projectlist",JSON.stringify(projectList));
+    localStorage.setItem("projectId",JSON.stringify(id));
 }
 function displayAllProjects(){
     projectList.forEach(element => {
@@ -27,4 +36,4 @@ function addProject(name){
         new project(name);
     }
 }
-export {project,displayAllProjects,projectList,addProject}
+export {project,displayAllProjects,projectList,addProject,addProjectToStorage}

@@ -1,4 +1,4 @@
-import {todo,createTask,tasklist,addTaskToStorage,deleteTask} from './task.js';
+import {todo,createTask,taskList,addTaskToStorage,deleteTask} from './task.js';
 import {project,addProject,projectList,addProjectToStorage} from './project.js';
 let activeProject
 
@@ -121,7 +121,7 @@ function displayTasks(array){
     });
 }
 function deleteTaskDom(id){
-    deleteTask(tasklist[id])
+    deleteTask(taskList[id])
     refresh();
 }
 function changeCheckList(task){
@@ -145,7 +145,7 @@ function clickHandler(){
     //Add event listener to display all projects
     const allProjects=document.querySelector('#allprojectbutton');
     allProjects.addEventListener('click',()=>{
-        displayTasks(tasklist);
+        displayTasks(taskList);
         removeActiveClass();
         allProjects.classList.add('active');
     })
@@ -156,8 +156,8 @@ function clickHandler(){
             //reworked connection task-> project
             activeProject=projectList[project.id];
             let tasksInProject=[]
-            tasklist.forEach(task => {
-                if(task!=null && task.assignedTo===projectList[project.id]){
+            taskList.forEach(task => {
+                if(task!=null && task.assignedTo.id==projectList[project.id].id){
                     tasksInProject.push(task)
                 }
             });
@@ -398,7 +398,6 @@ function editTask(task){
             task.notes=notes.value;
         }
         if(assignProject.value!=""){
-            console.log(assignProject.value)
             task.assignedTo=projectList[assignProject.value];
         }
         refresh();
@@ -439,15 +438,15 @@ function wrongDataAlert(){
 }
 function refresh(){//refresh tasks and projects
     addTaskToStorage();
-    //addProjectToStorage();
+    addProjectToStorage();
     document.querySelector('#allprojectbutton').classList.add('active');
-    displayTasks(tasklist);
+    displayTasks(taskList);
     displayProjects();
     clickHandler();
 }
 
 function loadPage(){//add everything with event listeners for modals
-    displayTasks(tasklist);
+    displayTasks(taskList);
     displayProjects();
     clickHandler();
     modalClickHandler();
