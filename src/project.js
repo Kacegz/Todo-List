@@ -25,14 +25,9 @@ function addProjectToStorage(){
     localStorage.setItem("projectlist",JSON.stringify(projectList));
     localStorage.setItem("projectId",id);
 }
-function displayAllProjects(){
-    projectList.forEach(element => {
-        return console.log({...element})
-    });
-}
 function addProject(name){
     if(name!==""){
         new project(name);
     }
 }
-export {project,displayAllProjects,projectList,addProject,addProjectToStorage,deleteProject}
+export {project,projectList,addProject,addProjectToStorage,deleteProject}

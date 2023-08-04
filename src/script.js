@@ -1,6 +1,6 @@
 import './style.css';
-import {todo,displayAllTasks,taskList,id} from './task.js';
-import {project,displayAllProjects,projectList} from './project.js';
+import {todo,taskList} from './task.js';
+import {project,projectList} from './project.js';
 import loadPage from './dom';
 function loadStorage(){
     if(localStorage.getItem("tasklist") && localStorage.getItem("projectlist")){
@@ -17,8 +17,6 @@ function loadStorage(){
 }
 
 loadStorage()
-//displayAllTasks();
-//displayAllProjects()
 loadPage();
 
 

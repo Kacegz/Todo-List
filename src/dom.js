@@ -1,5 +1,5 @@
-import {todo,createTask,taskList,addTaskToStorage,deleteTask} from './task.js';
-import {project,addProject,projectList,addProjectToStorage,deleteProject} from './project.js';
+import {createTask,taskList,addTaskToStorage,deleteTask} from './task.js';
+import {addProject,projectList,addProjectToStorage,deleteProject} from './project.js';
 import { format } from "date-fns";
 let activeProject
 
@@ -21,8 +21,13 @@ function displayProjects(){
             customProjectDelete.classList.add('projectbutton');
             customProjectDelete.classList.add("projectdelete");
     
-            customProjectDelete.addEventListener('click',()=>{deleteProject(project);refresh();})
-            customProjectEdit.addEventListener('click',()=>{editProject(project)})
+            customProjectDelete.addEventListener('click',()=>{
+                deleteProject(project);
+                refresh();
+            })
+            customProjectEdit.addEventListener('click',()=>{
+                editProject(project)
+            })
     
             customProject.appendChild(customProjectName);
             customProject.appendChild(customProjectEdit);
@@ -76,7 +81,7 @@ function displayTasks(array){
             expandable.hidden=true;
 
             customTaskExpand.addEventListener("click",()=>{showTaskDetails(expandable)})
-            //
+
             const customTaskCheck=document.createElement('input');
             customTaskCheck.setAttribute("type","checkbox")
             if(task.checklist===true){//apply styles
@@ -156,7 +161,6 @@ function clickHandler(){
     const projects=document.querySelectorAll('.customproject');
     projects.forEach(project => {
         project.addEventListener('click',()=>{
-            //reworked connection task-> project
             activeProject=projectList[project.id];
             let tasksInProject=[]
             taskList.forEach(task => {
@@ -166,14 +170,7 @@ function clickHandler(){
                 }
             });
             displayTasks(tasksInProject)
-            highlightActive()
-            //old connection project->list of tasks
-
-            /*if(projectList[project.id]!==undefined){//prevent from adding into non-existent and causing error
-                /*displayTasks(projectList[project.id].assignedTasks)
-                activeProject=projectList[project.id];
-            }*/
-            
+            highlightActive()            
         })
     });
 }
@@ -364,7 +361,6 @@ function taskModalHandler(){
         if(title.value!="" && desc.value!="" && date.value!="" && priority.value!="" && assignProject.value!=""){
             let createdTask=createTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked);
             createdTask.assignedTo=projectList[assignProject.value]
-            //projectList[assignProject.value].assignTask(createdTask);
             refresh();
         }else{
             wrongDataAlert();
@@ -451,7 +447,7 @@ function refresh(){//refresh tasks and projects
     clickHandler();
 }
 
-function loadPage(){//add everything with event listeners for modals
+function loadPage(){
     displayTasks(taskList);
     displayProjects();
     clickHandler();

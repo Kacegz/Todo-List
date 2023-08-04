@@ -26,11 +26,6 @@ function deleteTask(task){
     console.log(taskList)
     delete taskList[task.id];
 }
-function displayAllTasks(){
-    taskList.forEach(element => {
-        console.log(element)
-    });
-}
 function addTaskToStorage(){
     localStorage.setItem("tasklist",JSON.stringify(taskList));
     localStorage.setItem("taskId",id);
@@ -41,4 +36,4 @@ function createTask(title,desc,dueDate,priority,notes,checklist){
         return new todo(title,desc,formattedDate,priority,notes,checklist);
     }
 }
-export {todo,displayAllTasks,createTask,taskList,addTaskToStorage,deleteTask};
+export {todo,createTask,taskList,addTaskToStorage,deleteTask};
