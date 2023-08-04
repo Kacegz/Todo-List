@@ -87,6 +87,8 @@ html,body,p,h1,h2,h3{
     justify-content: center;
     align-items: center;
     gap:5px;
+    min-width: 140px;
+    max-width: 200px;
 }
 .options{
     display: flex;
@@ -204,5 +206,6 @@ input[type="date"]{
     filter:contrast(10%);
 }
 .active{
-    border-color: red !important;
+    background-color: #4c5763;
+    
 }
