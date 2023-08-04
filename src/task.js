@@ -33,7 +33,7 @@ function displayAllTasks(){
 }
 function addTaskToStorage(){
     localStorage.setItem("tasklist",JSON.stringify(taskList));
-    localStorage.setItem("taskId",JSON.stringify(id));
+    localStorage.setItem("taskId",id);
 }
 function createTask(title,desc,dueDate,priority,notes,checklist){
     if(title!="" && desc!="" && dueDate!="" && priority!=""){

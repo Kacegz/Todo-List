@@ -1,8 +1,8 @@
-import { tasklist } from "./task";
+import { taskList } from "./task";
 let projectList=[];
 let id
 if(localStorage.getItem("projectId")){
-    id=localStorage.getItem("taskId")
+    id=localStorage.getItem("projectId")
 }else{
     id=0;
 }
@@ -12,19 +12,18 @@ class project{
         this.id=id++;
         projectList.push(this)
     }
-    delete(){
-        tasklist.forEach(task => {
-            if(task.assignedTo===this){
-                task.delete();
-            }
-        });
-        delete projectList[this.id];
-    }
 }
-
+function deleteProject(project){
+    taskList.forEach(task => {
+        if(task!=undefined && task.assignedTo.id===project.id){
+            delete taskList[task.id];
+        }
+    });
+    delete projectList[project.id];
+}
 function addProjectToStorage(){
     localStorage.setItem("projectlist",JSON.stringify(projectList));
-    localStorage.setItem("projectId",JSON.stringify(id));
+    localStorage.setItem("projectId",id);
 }
 function displayAllProjects(){
     projectList.forEach(element => {
@@ -36,4 +35,4 @@ function addProject(name){
         new project(name);
     }
 }
-export {project,displayAllProjects,projectList,addProject,addProjectToStorage}
+export {project,displayAllProjects,projectList,addProject,addProjectToStorage,deleteProject}

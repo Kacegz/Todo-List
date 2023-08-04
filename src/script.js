@@ -14,7 +14,6 @@ function loadStorage(){
         exampleTask1.assignedTo=projectList[0]
         exampleTask2.assignedTo=projectList[1]
     }
-    //projectList=JSON.parse(localStorage.getItem("projectlist"))
 }
 
 loadStorage()

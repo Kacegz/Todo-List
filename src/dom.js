@@ -1,31 +1,34 @@
 import {todo,createTask,taskList,addTaskToStorage,deleteTask} from './task.js';
-import {project,addProject,projectList,addProjectToStorage} from './project.js';
+import {project,addProject,projectList,addProjectToStorage,deleteProject} from './project.js';
+import { format } from "date-fns";
 let activeProject
 
 function displayProjects(){
     const projects=document.querySelector('#customprojects');
     projects.textContent="";
     projectList.forEach(project => {
-        const customProject=document.createElement('div');
-        customProject.classList.add('customproject')
-        customProject.id=project.id;
-        project.domElement=customProject;
-        const customProjectName=document.createElement('h3');
-        customProjectName.textContent=project.name;
-        const customProjectEdit=document.createElement('div');
-        customProjectEdit.classList.add('projectbutton');
-        customProjectEdit.classList.add("projectedit");
-        const customProjectDelete=document.createElement('div');
-        customProjectDelete.classList.add('projectbutton');
-        customProjectDelete.classList.add("projectdelete");
-
-        customProjectDelete.addEventListener('click',()=>{project.delete();refresh();})
-        customProjectEdit.addEventListener('click',()=>{editProject(project)})
-
-        customProject.appendChild(customProjectName);
-        customProject.appendChild(customProjectEdit);
-        customProject.appendChild(customProjectDelete);
-        projects.appendChild(customProject);
+        if(project!=undefined){
+            const customProject=document.createElement('div');
+            customProject.classList.add('customproject')
+            customProject.id=project.id;
+            project.domElement=customProject;
+            const customProjectName=document.createElement('h3');
+            customProjectName.textContent=project.name;
+            const customProjectEdit=document.createElement('div');
+            customProjectEdit.classList.add('projectbutton');
+            customProjectEdit.classList.add("projectedit");
+            const customProjectDelete=document.createElement('div');
+            customProjectDelete.classList.add('projectbutton');
+            customProjectDelete.classList.add("projectdelete");
+    
+            customProjectDelete.addEventListener('click',()=>{deleteProject(project);refresh();})
+            customProjectEdit.addEventListener('click',()=>{editProject(project)})
+    
+            customProject.appendChild(customProjectName);
+            customProject.appendChild(customProjectEdit);
+            customProject.appendChild(customProjectDelete);
+            projects.appendChild(customProject);
+        }
     });
 }
 function displayTasks(array){
@@ -157,7 +160,8 @@ function clickHandler(){
             activeProject=projectList[project.id];
             let tasksInProject=[]
             taskList.forEach(task => {
-                if(task!=null && task.assignedTo.id==projectList[project.id].id){
+                console.log(projectList)
+                if(task!=null && projectList[project.id]!=undefined && task.assignedTo.id==projectList[project.id].id){
                     tasksInProject.push(task)
                 }
             });
@@ -389,7 +393,7 @@ function editTask(task){
             task.desc=desc.value;
         }
         if(date.value!=""){
-            task.dueDate=date.value;
+            task.dueDate=format(new Date(date.value),'dd-MM-yyyy');
         }
         if(priority.value!=""){
             task.priority=priority.value;
@@ -407,11 +411,13 @@ function projectSelectModal(){//refreshes projects in task modal
     const assignProject=document.querySelector('#project');
     assignProject.textContent="";
     projectList.forEach(project => {
-        const availableProjects=document.createElement('option');
-        availableProjects.setAttribute('value',project.id)
-        availableProjects.setAttribute('class','projectoption')
-        availableProjects.textContent=project.name;
-        assignProject.appendChild(availableProjects)
+        if(project!=undefined){
+            const availableProjects=document.createElement('option');
+            availableProjects.setAttribute('value',project.id)
+            availableProjects.setAttribute('class','projectoption')
+            availableProjects.textContent=project.name;
+            assignProject.appendChild(availableProjects)
+        }
     });
 }
 function modalClickHandler(){
