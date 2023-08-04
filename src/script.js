@@ -2,20 +2,19 @@ import './style.css';
 import {todo,taskList} from './task.js';
 import {project,projectList} from './project.js';
 import loadPage from './dom';
+
 function loadStorage(){
     if(localStorage.getItem("tasklist") && localStorage.getItem("projectlist")){
         taskList=JSON.parse(localStorage.getItem("tasklist"))
         projectList=JSON.parse(localStorage.getItem("projectlist"))
     }else{
-        const exampleProject1 = new project('firstproject');
-        const exampleProject2 = new project('secondproject');
-        const exampleTask1= new todo("First","Description","26-07-2023","High","fgssfdafsdafdsafsdaasdffdasasdfsdfafsdasdfasdafafsd",false);
-        const exampleTask2= new todo("Second","","","","",true);
-        exampleTask1.assignedTo=projectList[0]
-        exampleTask2.assignedTo=projectList[1]
+        new project('Home');
+        new project('Work');
+        new todo("Yoga","Yoga ","26-07-2023","High","Do 15 minutes of yoga",false).assignedTo=projectList[0];
+        new todo("Laundry","Do laundry","27-07-2023","Normal","",false).assignedTo=projectList[0];
+        new todo("Meeting","Meeting at 2pm","25-07-2023","High","Meeting with Charles on Teams about new project",true).assignedTo=projectList[1];
     }
 }
-
 loadStorage()
 loadPage();
 
