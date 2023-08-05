@@ -17,7 +17,3 @@ function loadStorage(){
 }
 loadStorage()
 loadPage();
-
-
-
-
