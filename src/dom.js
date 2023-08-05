@@ -167,8 +167,10 @@ function clickHandler(){
 }
 function highlightActive(){
     removeActiveClass()
-    const domActiveProject=document.querySelector('#'+CSS.escape(activeProject.id))
-    domActiveProject.classList.add('active');
+    if(activeProject!=undefined){
+        const domActiveProject=document.querySelector('#'+CSS.escape(activeProject.id))
+        domActiveProject.classList.add('active');
+    }
 }
 function removeActiveClass(){
     const allProjects=document.querySelector('#allprojectbutton');
