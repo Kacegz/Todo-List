@@ -209,3 +209,15 @@ input[type="date"]{
     background-color: #4c5763;
     
 }
+input[type="checkbox"]{
+    appearance: none;
+    background-image: url(assets/unchecked.svg);
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+}
+input[type="checkbox"]:checked{
+    appearance: none;
+    background-image: url(assets/checked.svg);
+    background-size:contain;
+}
