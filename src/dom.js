@@ -38,7 +38,6 @@ function displayTasks(array){
     const tasks=document.querySelector('#tasks');
     tasks.textContent="";
     array.forEach(task => {
-        
         const customTask=document.createElement('div');
         customTask.classList.add('customtask');
         if(task!=undefined){
@@ -47,13 +46,11 @@ function displayTasks(array){
             customTaskTitle.classList.add('title')
             const customTaskOptions=document.createElement('div');
             customTaskOptions.classList.add('options');
-
             const customTaskDue=document.createElement('p');
             customTaskDue.textContent=task.dueDate;
             const customTaskExpand=document.createElement('div');
             customTaskExpand.classList.add('taskbutton');
             customTaskExpand.classList.add('expandbutton');
-
             //styling for task details section
             const expandable=document.createElement('div');
             expandable.classList.add('expandable');
@@ -77,9 +74,7 @@ function displayTasks(array){
             details.appendChild(notes)
             expandable.appendChild(details);
             expandable.hidden=true;
-
             customTaskExpand.addEventListener("click",()=>{showTaskDetails(expandable)})
-
             const customTaskCheck=document.createElement('input');
             customTaskCheck.setAttribute("type","checkbox")
             if(task.checklist===true){//apply styles
@@ -122,9 +117,7 @@ function displayTasks(array){
 
             customTask.appendChild(customTaskTitle);
             customTask.appendChild(customTaskOptions)
-
             customTask.appendChild(expandable);
-
             tasks.appendChild(customTask);
         }
     });
@@ -140,7 +133,6 @@ function showTaskDetails(expandable){
         expandable.hidden=true;
     }
 }
-
 function clickHandler(){
     //Add event listener to display all projects
     const allProjects=document.querySelector('#allprojectbutton');
@@ -349,7 +341,7 @@ function taskModalHandler(){
     const notes=document.querySelector('#notes');
     const assignProject=document.querySelector('#project');
     const checklist=document.querySelector('#checklist');
-
+    
     confirmButton.addEventListener('click',()=>{
         if(title.value!="" && desc.value!="" && date.value!="" && priority.value!="" && assignProject.value!=""){
             let createdTask=createTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked);

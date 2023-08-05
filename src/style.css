@@ -207,7 +207,6 @@ input[type="date"]{
 }
 .active{
     background-color: #4c5763;
-    
 }
 input[type="checkbox"]{
     appearance: none;
