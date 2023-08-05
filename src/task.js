@@ -18,12 +18,8 @@ class todo{
         taskList.push(this)
     }
     assignedTo="";
-    displayCurrent(){
-        console.log(this.title+" "+this.desc)
-    }
 }
 function deleteTask(task){
-    console.log(taskList)
     delete taskList[task.id];
 }
 function addTaskToStorage(){
