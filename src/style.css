@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 :root{
     --header-color:rgb(109, 149, 223);
     --main-color:rgb(255, 255, 255);
@@ -11,7 +11,7 @@
 html,body,p,h1,h2,h3{
     margin: 0;
     color: #EEEEEE;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 #container{
     height: 100vh;
