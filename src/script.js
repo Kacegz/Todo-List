@@ -22,9 +22,9 @@ function loadStorage(){
     }else{
         addProject('Home');
         addProject('Work');
-        addTask("Yoga","Yoga ","26-07-2023","High","Do 15 minutes of yoga",false,projectList[0]);
-        addTask("Laundry","Do laundry","27-07-2023","Normal","",false,projectList[0]);
-        addTask("Meeting","Meeting at 2pm","25-07-2023","High","Meeting with Charles on Teams about new project",true,projectList[1]);
+        addTask("Yoga","Yoga ","2023-07-26","High","Do 15 minutes of yoga",false,projectList[0]);
+        addTask("Laundry","Do laundry","2023-07-27","Normal","",false,projectList[0]);
+        addTask("Meeting","Meeting at 2pm","2023-07-25","High","Meeting with Charles on Teams about new project",true,projectList[1]);
     }
 }
 loadStorage()

@@ -34,8 +34,8 @@ function addTaskToStorage(){
 }
 function addTask(title,desc,dueDate,priority,notes,checklist,assignedTo){
     if(title!="" && desc!="" && dueDate!="" && priority!=""){
-        //let formattedDate=format(new Date(dueDate),'dd-MM-yyyy');
-        let newTask=new todo(title,desc,dueDate,priority,notes,checklist,assignedTo,id);
+        let formattedDate=format(new Date(dueDate),'dd-MM-yyyy');
+        let newTask=new todo(title,desc,formattedDate,priority,notes,dueDate,assignedTo,id);
         id++;
         taskList.push(newTask)
     }
