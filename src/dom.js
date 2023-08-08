@@ -1,4 +1,4 @@
-import {createTask,taskList,addTaskToStorage,deleteTask,changeCheckList} from './task.js';
+import {addTask,taskList,addTaskToStorage} from './task.js';
 import {addProject,projectList,addProjectToStorage} from './project.js';
 import { format } from "date-fns";
 let activeProject
@@ -86,7 +86,7 @@ function displayTasks(array){
                 customTask.classList.remove('finished');
             }
             customTaskCheck.addEventListener('click',()=>{
-                changeCheckList(task);
+                task.changeCheckList();
                 refresh();
             })
             customTaskCheck.classList.add('taskbutton');
@@ -124,7 +124,7 @@ function displayTasks(array){
     });
 }
 function deleteTaskDom(id){
-    deleteTask(taskList[id])
+    taskList[id].deleteTask();
     refresh();
 }
 function showTaskDetails(expandable){
@@ -345,8 +345,7 @@ function taskModalHandler(){
     
     confirmButton.addEventListener('click',()=>{
         if(title.value!="" && desc.value!="" && date.value!="" && priority.value!="" && assignProject.value!=""){
-            let createdTask=createTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked);
-            createdTask.assignedTo=projectList[assignProject.value]
+            addTask(title.value,desc.value,date.value,priority.value,notes.value,checklist.checked,projectList[assignProject.value]);
             refresh();
         }else{
             wrongDataAlert();
