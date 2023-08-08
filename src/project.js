@@ -1,11 +1,7 @@
 import { taskList } from "./task";
+import { loadProjectId } from "./localstorage";
 let projectList=[];
-let id
-if(localStorage.getItem("projectId")){
-    id=localStorage.getItem("projectId")
-}else{
-    id=0;
-}
+let id=loadProjectId();
 class project{
     constructor(name,id){
         this.name=name;
@@ -20,10 +16,6 @@ class project{
         delete projectList[this.id];
     };
 }
-function addProjectToStorage(){
-    localStorage.setItem("projectlist",JSON.stringify(projectList));
-    localStorage.setItem("projectId",id);
-}
 function addProject(name){
     if(name!==""){
         let createdProject=new project(name,id);
@@ -31,4 +23,4 @@ function addProject(name){
         projectList.push(createdProject)
     }
 }
-export {project,projectList,addProject,addProjectToStorage}
+export {project, projectList, addProject, id as projectId}

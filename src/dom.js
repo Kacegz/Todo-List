@@ -1,5 +1,6 @@
-import {addTask,taskList,addTaskToStorage} from './task.js';
-import {addProject,projectList,addProjectToStorage} from './project.js';
+import { addTask,taskList } from './task.js';
+import { addProject,projectList } from './project.js';
+import { addToStorage } from "./localstorage.js";
 import { format } from "date-fns";
 let activeProject
 
@@ -424,8 +425,7 @@ function wrongDataAlert(){
     modal.showModal();
 }
 function refresh(){//refresh tasks and projects
-    addTaskToStorage();
-    addProjectToStorage();
+    addToStorage();
     document.querySelector('#allprojectbutton').classList.add('active');
     displayTasks(taskList);
     displayProjects();

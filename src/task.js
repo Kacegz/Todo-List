@@ -1,11 +1,7 @@
 import { format } from "date-fns";
+import { loadTaskId } from "./localstorage";
 let taskList=[];
-let id
-if(localStorage.getItem("taskId")){
-    id=localStorage.getItem("taskId")
-}else{
-    id=0;
-}
+let id=loadTaskId();
 class todo{
     constructor(title,desc,dueDate,priority,notes,checklist,assignedTo,id){
         this.title=title;
@@ -28,10 +24,6 @@ class todo{
         }
     }
 }
-function addTaskToStorage(){
-    localStorage.setItem("tasklist",JSON.stringify(taskList));
-    localStorage.setItem("taskId",id);
-}
 function addTask(title,desc,dueDate,priority,notes,checklist,assignedTo){
     if(title!="" && desc!="" && dueDate!="" && priority!=""){
         let formattedDate=format(new Date(dueDate),'dd-MM-yyyy');
@@ -40,4 +32,4 @@ function addTask(title,desc,dueDate,priority,notes,checklist,assignedTo){
         taskList.push(newTask)
     }
 }
-export {todo,addTask,taskList,addTaskToStorage};
+export {todo, addTask, taskList, id as taskId};
