@@ -1,5 +1,5 @@
 import {createTask,taskList,addTaskToStorage,deleteTask,changeCheckList} from './task.js';
-import {addProject,projectList,addProjectToStorage,deleteProject} from './project.js';
+import {addProject,projectList,addProjectToStorage} from './project.js';
 import { format } from "date-fns";
 let activeProject
 
@@ -21,7 +21,8 @@ function displayProjects(){
             customProjectDelete.classList.add('projectbutton');
             customProjectDelete.classList.add("projectdelete");
             customProjectDelete.addEventListener('click',()=>{
-                deleteProject(project);
+                console.log(project)
+                project.deleteProject();
                 refresh();
             })
             customProjectEdit.addEventListener('click',()=>{

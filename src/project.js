@@ -7,19 +7,18 @@ if(localStorage.getItem("projectId")){
     id=0;
 }
 class project{
-    constructor(name){
+    constructor(name,id){
         this.name=name;
-        this.id=id++;
-        projectList.push(this)
+        this.id=id;
     }
-}
-function deleteProject(project){
-    taskList.forEach(task => {
-        if(task!=undefined && task.assignedTo.id===project.id){
-            delete taskList[task.id];
-        }
-    });
-    delete projectList[project.id];
+    deleteProject(){
+        taskList.forEach(task => {
+            if(task!=undefined && task.assignedTo.id===this.id){
+                delete taskList[task.id];
+            }
+        });
+        delete projectList[this.id];
+    };
 }
 function addProjectToStorage(){
     localStorage.setItem("projectlist",JSON.stringify(projectList));
@@ -27,7 +26,9 @@ function addProjectToStorage(){
 }
 function addProject(name){
     if(name!==""){
-        new project(name);
+        let createdProject=new project(name,id);
+        id++;
+        projectList.push(createdProject)
     }
 }
-export {project,projectList,addProject,addProjectToStorage,deleteProject}
+export {project,projectList,addProject,addProjectToStorage}
